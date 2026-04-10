@@ -595,5 +595,22 @@ if s[i] == s[f]:
     print("É palíndromo.")
 else:
     print("Não é palíndromo")
-    
+
+# 5.5 - Aprofundando nas f-strings.
+# As aspas triplas permitem utilizar mais de uma linha para somente uma string.
+preço = 100
+print(f"""
+O preço do novo produto é: R${preço:.2f}
+E pode ser encontrado nas melhores lojas do ramo""")
+
+# Também com aspas triplas podemos utilizar aspas dentro das aspas.
+print("""Com aspas triplas, podemos utilizar "aspas" dentro da string""")
+
+# Dá pra usar também, caso não queira as aspas triplas:
+print("Dá pra marcar caracteres especiais dentro da string sem precisar de 3 \"aspas\"")
+
+# Representação de quebra de linhas: \n
+a = "primeira linha\nsegunda linha\nterceira linha"
+print(a)
+
 
