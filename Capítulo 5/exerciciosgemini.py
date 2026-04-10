@@ -64,7 +64,7 @@ if taxaB >= taxaA:
 else:
     while habA < habB:
         habA = habA * (1 + (taxaA / 100))
-        habB = habB * (1 +(taxaB / 100))
+        habB = habB * (1 + (taxaB / 100))
         ano = ano + 1
 print(f"No ano {ano} a população da cidade A ultrapassou a da cidade B em  aproximadamente {habA - habB:6.2f} pessoas")
 
