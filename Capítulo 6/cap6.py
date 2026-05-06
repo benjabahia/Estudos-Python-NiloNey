@@ -770,4 +770,713 @@ print(f"Temperatura mínima: {mínima} °C")
 print(f"Temperatura média: {soma / len(T)} °C")
 
 # 6.13 - Aplicações
+# Programa 6.12: Cópia de elementos para outras listas
+valores = [9, 8, 7, 12, 0, 13, 21]
+pares = []
+ímpares = []
+for e in valores:
+    if e % 2 == 0:
+        pares.append(e)
+    else:
+        ímpares.append(e)
+print("Pares: ", pares)
+print("Ímpares: ", ímpares)    
+
+# Como funciona a vírgula no print()?
+# print("Pares: ", pares)
+# Conversão Automática: O print é "inteligente" 
+# o suficiente para converter quase qualquer objeto 
+# (listas, números, dicionários) em texto para poder 
+# mostrar no terminal, sem você precisar formatar nada manualmente.
+
+# Programa 6.13: Controle da utilização de salas de um cinema
+
+lugares_vagos = [10, 2, 1, 3, 0]
+while True:
+    sala = int(input("Sala (0 para sair): "))
+    if sala == 0:
+        print("Fim")
+        break
+    if sala > len(lugares_vagos) or sala < 1:
+        print("Sala inválida")
+    elif lugares_vagos[sala - 1] == 0:
+        print("Desculpe, sala lotada!")
+    else:
+        lugares = int(input(f"Quantos lugares você deseja ({lugares_vagos[sala - 1]} vagos): "))
+        if lugares > lugares_vagos[sala - 1]:
+            print("Esse número de lugares não está disponível.")
+        elif lugares < 0:
+            print("Número inválido")
+        else:
+            lugares_vagos[sala - 1] -= lugares
+            print(f"{lugares} lugares vendidos")
+print("Utilização de salas")
+for sala, vagos in enumerate(lugares_vagos):
+    print(f"Sala {sala + 1} - {vagos} lugar(es) vazio(s)")
+
+# sala, vagos: São duas variáveis temporárias que criamos na hora.
+# sala guarda o índice (0, 1, 2...) e vagos guarda o conteúdo daquela posição (10, 2, 1...).
+
+# Exercício 6.14 - Modifique o Programa 6.13 de forma a mostrar quantos
+# ingressos foram vendidos em cada sala. Utilize uma lista do
+# mesmo tamanho da quantidade de salas e utilize seus
+# elementos para contar quantos ingressos foram vendidos em
+# cada sala. Imprima na tela o total das vendas no fim do programa;
+# Meu jeito:
+
+lugares_vagos = [10, 2, 1, 3, 0]
+lugares_vagos_copia = [10, 2, 1, 3, 0]
+while True:
+    sala = int(input("Sala (0 para sair): "))
+    if sala == 0:
+        print("Fim")
+        break
+    if sala > len(lugares_vagos) or sala < 1:
+        print("Sala inválida")
+    elif lugares_vagos[sala - 1] == 0:
+        print("Desculpe, sala lotada!")
+    else:
+        lugares = int(input(f"Quantos lugares você deseja ({lugares_vagos[sala - 1]} vagos): "))
+        if lugares > lugares_vagos[sala - 1]:
+            print("Esse número de lugares não está disponível.")
+        elif lugares < 0:
+            print("Número inválido")
+        else:
+            lugares_vagos_copia[sala - 1] -= lugares
+            print(f"{lugares} lugares vendidos")
+i = 0            
+while i < len(lugares_vagos):
+    if lugares_vagos[i] == lugares_vagos_copia[i]:
+         print(f"Nenhum ingresso vendido na sala {i + 1}")
+    else:
+        print(f"Foram vendido(s) {(lugares_vagos[i]) - (lugares_vagos_copia[i])} ingresso(s) na sala {i + 1}")
+    i += 1
+print("Utilização de salas")
+for sala, vagos in enumerate(lugares_vagos):
+    print(f"Sala {sala + 1} - {vagos} lugar(es) vazio(s)")
     
+# Jeito do livro:
+
+lugares_vagos = [10, 2, 1, 3, 0]
+vendidos = [0] * len(lugares_vagos) 
+while True:
+    sala = int(input("Sala (0 sai): "))
+    if sala == 0:
+        print("Fim")
+        break
+    if sala > len(lugares_vagos) or sala < 1:
+        print("Sala inválida")
+    elif lugares_vagos[sala - 1] == 0:
+        print("Desculpe, sala lotada!")
+    else:
+        lugares = int(
+            input(f"Quantos lugares você deseja ({lugares_vagos[sala - 1]} vagos):")
+        )
+        if lugares > lugares_vagos[sala - 1]:
+            print("Esse número de lugares não está disponível.")
+        elif lugares < 0:
+            print("Número inválido")
+        else:
+            lugares_vagos[sala - 1] -= lugares
+            vendidos[sala - 1] += lugares
+            print(f"{lugares} lugares vendidos")
+print("\nUtilização das salas")
+for sala, vagos in enumerate(lugares_vagos):
+    print(f"Sala {sala + 1} - {vagos} lugar(es) vazio(s)")
+print("\nVendas por sala")
+total_vendido = 0
+for sala, vendas in enumerate(vendidos):
+    print(f"Sala {sala + 1} - {vendas} ingressos vendido(s)")
+    total_vendido += vendas
+print(f"Total de ingressos vendidos: {total_vendido}")
+
+# EXplicação de linhas, na linha 860, vendidos = [0] * len(lugares_vagos)
+# Cria uma lista de zeros com o mesmo tamanho da lista de salas. vendidos = [0, 0, 0, 0, 0]
+# Na linha 880, vendidos[sala - 1] += lugares: Quando a venda é confirmada, o código vai na lista de
+# vendas, na posição daquela sala, e soma a quantidade comprada
+# Na linha 887, for sala, vendas in enumerate(vendidos):
+# O enumerate pega a lista de vendidos (ex: [2, 0, 5, 0, 0]).
+# Ele entrega o índice (0, 1, 2...) para a variável sala.
+# Ele entrega o valor guardado (quantos foram vendidos) para a variável vendas e peirnta os pares na tela.
+
+# Exercício 6.15 - Modifique o Programa 6.13 de forma a perguntar o número de salas
+# disponíveis no cinema, assim como a quantidade de lugares em cada
+# uma delas.
+
+# MEu jeito:
+perg_quantidade_de_salas = int(input("Quantas salas vamos abrir no cinema hoje? "))
+quantidade_de_salas = [0] * perg_quantidade_de_salas
+ocupados = [0] * perg_quantidade_de_salas
+i = 0
+while i < len(quantidade_de_salas):
+    assentos_por_sala = int(input(f"Quantos assentos tem disponível na sala {i + 1}? "))
+    perg_ocupados = int(input(f"Quantos ingressos foram vendidos na sala {i + 1}? "))
+    quantidade_de_salas[i] = assentos_por_sala
+    ocupados[i] = perg_ocupados
+    i += 1
+lugares_vagos = [0] * perg_quantidade_de_salas
+i = 0
+while i < len(lugares_vagos):
+    lugares_vagos[i] = quantidade_de_salas[i] - ocupados[i]
+    i += 1
+while True:
+    sala = int(input("Sala (0 para sair): "))
+    if sala == 0:
+        print("Fim")
+        break
+    if sala > len(lugares_vagos) or sala < 1:
+        print("Sala inválida")
+    elif lugares_vagos[sala - 1] == 0:
+        print("Desculpe, sala lotada!")
+    else:
+        lugares = int(input(f"Quantos lugares você deseja ({lugares_vagos[sala - 1]} vagos): "))
+        if lugares > lugares_vagos[sala - 1]:
+            print("Esse número de lugares não está disponível.")
+        elif lugares < 0:
+            print("Número inválido")
+        else:
+            lugares_vagos[sala - 1] -= lugares
+            print(f"{lugares} lugares vendidos")
+print("Utilização de salas")
+for sala, vagos in enumerate(lugares_vagos):
+    print(f"Sala {sala + 1} - {vagos} lugar(es) vazio(s)")
+    
+    
+# Jeito do livro:
+
+n_salas = int(input("Número de salas: "))
+lugares_vagos = []
+for sala in range(n_salas):
+    lugares_vagos.append(int(input(f"Lugares vagos na sala {sala + 1}: ")))
+
+vendidos = [0] * len(lugares_vagos)
+while True:
+    sala = int(input("Sala (0 sai): "))
+    if sala == 0:
+        print("Fim")
+        break
+    if sala > len(lugares_vagos) or sala < 1:
+        print("Sala inválida")
+    elif lugares_vagos[sala - 1] == 0:
+        print("Desculpe, sala lotada!")
+    else:
+        lugares = int(
+            input(f"Quantos lugares você deseja ({lugares_vagos[sala - 1]} vagos):")
+        )
+        if lugares > lugares_vagos[sala - 1]:
+            print("Esse número de lugares não está disponível.")
+        elif lugares < 0:
+            print("Número inválido")
+        else:
+            lugares_vagos[sala - 1] -= lugares
+            vendidos[sala - 1] += lugares
+            print(f"{lugares} lugares vendidos")
+print("\nUtilização das salas")
+for sala, vagos in enumerate(lugares_vagos):
+    print(f"Sala {sala + 1} - {vagos} lugar(es) vazio(s)")
+print("\nVendas por sala")
+total_vendido = 0
+for sala, vendas in enumerate(vendidos):
+    print(f"Sala {sala + 1} - {vendas} ingressos vendido(s)")
+    total_vendido += vendas
+print(f"Total de ingressos vendidos: {total_vendido}")
+
+# 6.14 Listas com strings:
+S = ["maçãs", "peras", "kiwis"]
+len(S) # 3
+print(S[0]) # maçãs
+
+# Programa 6.14: Lendo e imprimindo uma lista de compras
+compras = []
+while True:
+    produto = input("Produto: ")
+    if produto == "fim":
+        break
+    compras.append(produto)
+for p in compras:
+    print(p)
+    
+# 6.15 Listas dentro de listas
+S = ["maçãs", "peras", "kiwis"]
+print(S[0][0]) # m
+print(S[0][1]) # a
+print(S[1][2]) # r
+
+# Programa 6.15: Impressão de uma lista de strings, letra a letra.
+L = ["maçãs", "peras", "kiwis"]
+for palavra in L:
+    for letra in palavra:
+        print(letra)
+
+# 6.16: Listas com elementos de tipos diferentes:
+produto1 = ["maçã", 10, 0.3]
+produto2 = ["pera", 5, 0.75]
+produto3 = ["kiwi", 4, 0.98]
+
+# É possível criar listas, que contenham strings, inteiros e floats!
+
+# Programa 6.17: Listas de listas
+produto1 = ["maçã", 10, 0.3]
+produto2 = ["pera", 5, 0.75]
+produto3 = ["kiwi", 4, 0.98]
+compras = [produto1, produto2, produto3] # Sim, é possível fazer uma lista de listas.
+for e in compras:
+    print(f"Produto: {e[0]}")
+    print(f"Quantidade: {e[1]}")
+    print(f"Preço: {e[2]}")
+    
+# Programa 6.19: Criação e impressão da lista de compras
+compras = []
+while True:
+    produto = input("Produto: ")
+    if produto == "fim":
+        break
+    quantidade = int(input("Quantidade: "))
+    preço = float(input("Preço: "))
+    compras.append([produto, quantidade, preço])
+soma = 0
+for e in compras:
+    print(f"{e[0]:20s} x {e[1]:5d} {e[2]:5.2f} {e[1] * e[2]:6.2f}")
+    soma += e[1] * e[2]
+print(f"Total: {soma:7.2f}")
+    
+# Programa 6.20 - Ordenação pelo Bubble Sort
+L = [7, 4, 3, 12, 8] # Cria a lista de números desordenados.
+fim = 5 # Define o tamanho da "área de trabalho" inicial (5 elementos).
+while fim > 1: # nquanto houver mais de um elemento para comparar, continue o trabalho.
+    trocou = False # No início de cada rodada, assumimos que nada será trocado.
+    x = 0 # O operário começa sempre na primeira posição (índice 0).
+    while x < (fim - 1): # operário caminha do início até o penúltimo item da área de trabalho atual.
+        if L[x] > L[x + 1]: # Pergunta: "O número da esquerda é maior que o da direita?".
+            trocou = True # Se sim, acendemos o sinal de que houve mudança.
+            temp = L[x] # Guardamos o número da esquerda numa "caixa temporária" para não perdê-lo.
+            L[x] = L[x + 1] # Movemos o número menor para a esquerda.
+            L[x + 1] = temp # Colocamos o número maior (que estava na caixa temporária) na direita
+        x += 1 # O operário dá um passo à frente para comparar o próximo par.
+    if not trocou: # Se após percorrer tudo, a luz trocou continuar apagada...
+        break # paramos o código (a lista já está organizada).
+    fim -= 1 # Diminuímos a área de trabalho, pois o último número já está no lugar certo.
+for e in L: 
+    print(e)
+
+# Imagine que o nosso operário x tem braços curtos.
+#  Para trabalhar, ele precisa colocar a mão esquerda na caixa atual
+# (L[x]) e a mão direita na caixa seguinte (L[x + 1]).
+
+# Cada rodada serve para colocar somente O MAIOR no final. Depois
+# diminuimos 1 unidade do fim para deixar o maior lá e rodamos novamente para achar o maior
+# dentro daquele intervalo, que no caso seria o segundo maior da lista.
+
+# Exercício 6.16 - O que acontece quando a lista já está ordenada? rastreie
+# o programa 6.20, mas com a lista L = [1, 2, 3, 4, 5]
+L = [1, 2, 3, 4, 5]
+fim = 5
+while fim > 1:
+    trocou = False
+    x = 0
+    while x < (fim - 1):
+        if L[x] > L[x + 1]:
+            trocou = True
+            temp = L[x]
+            L[x] = L[x + 1]
+            L[x + 1] = temp
+        x += 1
+    if not trocou:
+        break
+    fim -= 1 
+for e in L:
+    print(e)
+
+# Se a lista já estiver ordenada, nenhum elemento é maior que o elemento seguinte.
+# Desta forma, após a primeira verificação de todos os elementos,
+# o loop externo é interrompido pela condição de "if not trocou = break" e o código já printa
+# verificando, assim, o loop interno somente 1 vez.
+
+# Exercício 6.17 - O que acontece quando dois valores são iguais? Rastreie o Programa
+# 6.20, mas com a lista L = [3, 3, 1, 5, 4].
+# Como utilizamos o método de bolhas, na primeira verificação, 3, 3 
+# são considerados como na ordem correta. Quanto verificamos o segundo 3 com 1, ocorre uma troca.
+# O mesmo vai ocorrer com o primeiro 3, mas apenas na próxima repetição
+# Veja que o 1 subiu para a primeira posição como uma bolha de ar dentro d'água.
+
+# Exercício 6.18 - Modifique o Programa 6.20 para ordenar a lista em ordem decrescente.
+# L = [1, 2, 3, 4, 5] deve ser ordenada como L = [5, 4, 3, 2, 1].
+
+L = [1, 2, 3, 4, 5]
+fim = 5
+while fim > 1:
+    trocou = False
+    x = 0
+    while x < (fim - 1):
+        if L[x] < L[x + 1]:
+            trocou = True
+            temp = L[x]
+            L[x] = L[x + 1]
+            L[x + 1] = temp
+        x += 1
+    if not trocou:
+        break
+    fim -= 1 
+for e in L:
+    print(e)
+    
+# Método sort ordena automaticamente uma lista
+L = [6, 4, 2, 1, 9]
+L.sort()
+print(L)
+
+# Função sorted ordena uma lista, porém sem alterar seus elementos.
+Z = [4, 3, 1]
+print(sorted(Z)) # [1, 3, 4]
+print(Z) # [4, 3, 1]
+
+# 6.17 - Dicionários.
+tabela = {"Alface": 0.45,
+          "Batata": 1.2,
+          "Tomate": 2.3,
+          "Feijão": 1.5}
+# O dicionário é composto por chave + valor, aqui a chave é "Alface" e o valor é 0.45.
+# Para saber o preço do tomate posso fazer isso:
+print(tabela["Tomate"]) # 2.3
+print(tabela)
+
+# Posso alterar o valor de algum irem dessa forma:
+tabela["Feijão"] = 1.8
+
+# Também posso criar um novo valor que será adicionado a tabela
+tabela["Cebola"] = 1.75
+print(tabela)
+
+# Operador in serve para verificar se uma chave pertence ao dicionário.
+tabela = {"Alface": 0.45,
+          "Batata": 1.2,
+          "Tomate": 2.3,
+          "Feijão": 1.5}
+print("Manga" in tabela) # False
+print("Batata" in tabela) # True
+
+# Métodos keys() e values(), keys retorna as chaves e values retorna os valores
+# Você pode utilizando a funcção list, transformar isso em uma lista.
+tabela = {"Alface": 0.45,
+          "Batata": 1.2,
+          "Tomate": 2.3,
+          "Feijão": 1.5}
+print(tabela.keys()) # dict_leys(['Alface', 'Batata', 'Tomate', 'Feijão'])
+print(tabela.values()) # dict_values([0.45, 1.2, 2.3, 1.5])
+
+# Programa 6.21: Obtenção do preço com um dicionário.
+tabela = {"alface": 0.45,
+          "batata": 1.2,
+          "tomate": 2.3,
+          "feijão": 1.5}
+while True:
+    produto = input("Digite o nome do produto (fim para sair): ").lower() # Lower transforma a palavra inteira 100% em minuscula.
+    if produto == "fim":
+        break
+    if produto in tabela:
+        print(f"Preço: R${tabela[produto]:5.2f}")
+    else:
+        print("Produto não encontrado.")
+# Para apagar uma chave, pode-se utilizar a instrução del.
+del tabela["tomate"]
+print(tabela)
+
+# 6.18 - Dicinonários com listas;
+
+estoque = {"alface": [500, 0.45],
+          "batata": [2001, 1.2],
+          "tomate": [1000, 2.3],
+          "feijão": [100, 1.5]}
+# Nesse caso, os itens são as chaves e os valores associados às chaves são listas.
+
+# Programa 6.22 - Exemplo de dicionário com estoque e operações de venda
+estoque = {"tomate": [1000, 2.30],
+            "alface": [500, 0.45],
+            "batata": [2001, 1.20],
+            "feijão": [100, 1.50]}
+
+venda = [["tomate", 5], ["batata", 10], ["alface", 5]] # Um papelzinho anotado com o que os clientes acabaram de comprar. Contém o nome do produto e quanto foi vendido.
+total = 0
+print("Vendas:\n")
+for operação in venda: # Inicia um loop que vai ler cada "pedacinho" da lista de vendas.
+    produto, quantidade = operação # Desempacotamento. Ele quebra a lista ["tomate", 5] e joga "tomate" na variável produto e 5 na variável quantidade.
+    preço = estoque[produto][1] # Vai ao dicionário estoque, procura a chave (ex: "tomate") e pega o item na posição [1] da lista de valores (o preço), a qual está associada a chave "tomate".
+    receita = preço * quantidade # Multiplica o valor unitário pela quantidade vendida.
+    print(f"{produto:12s}: {quantidade:3d} x {preço:6.2f} = {receita:6.2f}")
+    estoque[produto][0] -= quantidade
+    total += receita # Soma o valor dessa venda ao valor total acumulado.
+print(f" Receita total: {total:21.2f}\n")
+print("Estoque:\n")
+for chave, dados in estoque.items(): # O método items GERA pares de duplas, contendo a chave o valor associado a essa chave.
+    print("Descrição: ", chave)
+    print("Quantidade: ", dados[0])
+    print(f"Preço: {dados[1]:6.2f}\n")
+    
+# Exercício 6.19 - ltere o Programa 6.22 de forma a solicitar ao usuário o produto e a quantidade vendida.
+# Verifique se o nome do produto digitado existe no dicionário, e só então efetue a baixa em estoque.
+
+# Meu jeito:
+estoque = {"tomate": [1000, 2.30],
+            "alface": [500, 0.45],
+            "batata": [2001, 1.20],
+            "feijão": [100, 1.50]}
+i = 0
+lista_venda_produto = []
+lista_venda_quantidade = []
+lista_fusão_das_duas = []
+while i < len(estoque):
+    venda_produto = input("Produtos vendidos (fim para sair): ").lower()
+    if venda_produto in estoque:
+        lista_venda_produto.append(venda_produto)
+    elif venda_produto == "fim":
+        break
+    else:
+        print("Produto indisponível!")
+    venda_quantidade = int(input(f"Quantidade de {venda_produto}(s) comprados(as): "))
+    lista_venda_quantidade.append(venda_quantidade)
+    i += 1
+for a in range(len(lista_venda_produto)):
+    sublista = [lista_venda_produto[a], lista_venda_quantidade[a]]
+    lista_fusão_das_duas.append(sublista) # Essa lista de fusão das duas, vai ficar assim, por exemplo: [['batata', 15], ['feijão', 3], ['alface', 12]]
+total = 0
+print("Vendas:\n")
+for operação in lista_fusão_das_duas: 
+    produto, quantidade = operação 
+    preço = estoque[produto][1]
+    receita = preço * quantidade 
+    print(f"{produto:12s}: {quantidade:3d} x {preço:6.2f} = {receita:6.2f}")
+    estoque[produto][0] -= quantidade
+    total += receita 
+print(f" Receita total: {total:21.2f}\n")
+print("Estoque:\n")
+for chave, dados in estoque.items(): 
+    print("Descrição: ", chave)
+    print("Quantidade: ", dados[0])
+    print(f"Preço: {dados[1]:6.2f}\n")
+    
+# Jeito do livro:
+estoque = {
+    "tomate": [1000, 2.30],
+    "alface": [500, 0.45],
+    "batata": [2001, 1.20],
+    "feijão": [100, 1.50],
+}
+total = 0
+print("Vendas:\n")
+while True:
+    produto = input("Nome do produto (fim para sair):")
+    if produto == "fim":
+        break
+    if produto in estoque:
+        quantidade = int(input("Quantidade:"))
+        if quantidade <= estoque[produto][0]:
+            preço = estoque[produto][1]
+            custo = preço * quantidade
+            print(f"{produto:12s}: {quantidade:3d} x {preço:6.2f} = {custo:6.2f}")
+            estoque[produto][0] -= quantidade
+            total += custo
+        else:
+            print("Quantidade solicitada não disponível")
+    else:
+        print("Nome de produto inválido")
+print(f" Custo total: {total:21.2f}\n")
+print("Estoque:\n")
+for chave, dados in estoque.items():
+    print("Descrição: ", chave)
+    print("Quantidade: ", dados[0])
+    print(f"Preço: {dados[1]:6.2f}\n")
+
+# Exercício 6.20 - Escreva um programa que gere um dicionário, em que cada chave seja
+# um caractere, e seu valor seja o número desse caractere encontrado em uma frase lida.
+# Exemplo: O rato -> { “O”:1, “r”:1, “a”:1, “t”:1, “o”:1}
+
+frase = input("Digite uma frase para contar as letras:").replace(" ", "")
+d = {}
+for letra in frase:
+    if letra in d: # OLha para ver se aquela letra já foi registrada antes no dicionário.
+        d[letra] = d[letra] + 1 # Se a letra já existia, pegamos o valor que estava lá (ex: era 1) e somamos +1 (vira 2). 
+    else:
+        d[letra] = 1 # Criamos uma página nova no nosso livro para essa letra e anotamos que ela apareceu pela primeira vez (valor 1).
+print(d)
+
+# 6.19 - Dicionários com valor padrão
+# Programa 6.23: Exemplo de dicionário sem valor padrão
+d = {}
+for letra in "abracadabra":
+    if letra in d:
+        d[letra] += 1
+    else:
+        d[letra] = 1
+print(d) # {'a': 5, 'b': 2, 'r': 2, 'c': 'd': 1}
+
+# É possível simplificar isso utilizando o método get.
+# Programa 6.24: Exemplo de dicionário com valor padrão
+d = {}
+for letra in "abracadabra":
+    d[letra] = d.get(letra, 0) + 1
+print(d)
+
+# 6.20 - Tuplas.
+# É a mesma coisa que lista só que não pode alterra os valores e utiliza () ou nada (não precisa mas fica mais organizado com) no lugar de []
+tupla = ("a", "b", "c")
+tupla[0] = "D" # Vai dar ERRO!  
+
+# Tuplas podem ser utilizadas para desempacotar valores.
+a, b = 10, 20 # Aqui, por ex, não usei () pq não é obrigatório.
+print(a) # 10
+print(b) # 20
+
+# TAmbém podemos trocar valores de variáveis sem precisar de uma variável intermediária.
+a, b = 10, 20
+a, b = b, a
+print(a) # 20
+print(b) # 10
+
+# para criar uma tupla com somente 1 elemento é preciso usar a vírgula no final
+t1 = 1,
+print(t1)
+t1 = 1 # Aqui ele vai achar que é somente um número inteiro pq vc nn colocou a vírgula
+print(t1) 
+
+# É possível transformar listas em tuplas, com a função tuple.
+L = [1, 2, 3]
+T == tuple(L)
+print(T) # (1, 2, 3,)
+
+# É possível concantenar tuplas (obviamente sem alterar seus valores):
+t1 = 1, 2, 3
+t2 = 4, 5, 6
+t3 = t1 + t2
+print(t3)
+
+# Se uma tupla possuir uma lista dentro dela, é possível alterar a lista e não alterar a tupla diretamente.
+t = "a", ["b", "c", "d"]
+len(t) # 2
+t[1] # ['b', 'c'. 'd']
+t[1].append("e")
+print(t)
+
+# Podemos utilizar o * para indicar vários valores a desempacotar.
+*a, b = [1, 2, 3, 4, 5]
+print(a) # [1, 2, 3, 4]
+print(b) # 5
+
+# 6.21 - Conjuntos:
+# Não admite repetições e não mantém a ordem de seus elementos;
+
+a = set() # Criei um conjunto vazio.
+a.add(1)
+a.add(2)
+a.add(3)
+print(a) # {1, 2, 3}
+a.add(1)
+print(a) # {1, 2, 3} Como o 1 já faz parte, a ação de adicionar ele denovo é ignorada.
+
+# Podemos testar se um elemento faz parte de um conjunto usando o operador in do python
+print(1 in a) # True
+print(-2 in a) # False
+
+# Um conjunto pode ser criado a partir de listas, tuplas e qualquer outra estrutura de dados enumerável.
+b = set([2, 3])
+print(b) # {2, 3}
+len(b) # 2 (Sim a função len também funciona em conjuntos)
+
+# 6.21.1 - União
+# A união de conjuntos é realizada pelo operador | e resulta em um novo conjunto com todos os elementos.
+a = {0, 1, 2, 3, -1}
+b = {2, 3}
+c = set([4, 5, 6]) 
+print(a | b) # {0, 1, 2, 3, -1} # Ficou igual a "a" pois ele não admite repetições;
+a.union(b) # TAmbém pode ser escrito assi, é a mesma coisa.
+print(a | c) # {0, 1, 2, 3, 4, 5, 6, -1} 
+
+#6.21.2 - Intersecção.
+a = {1, 2, 3, 6}
+b = {2, 4, 5, 6}
+print(a & b) # {2, 6} - São os lementos em comum aos dois conjuntos;
+a.intersection(b) # Mesma coisa
+
+# 6.21.3 - DIferença.
+a = {0, 1, 2, 3, -1}
+b = {2, 3}
+print(a - b) # {0, 1, -1} # Elementos de "a" que não estão presentes em "b".
+a = {1, 2, 3, 6}
+b = {2, 4, 5, 6}
+print(a - b) # {1, 3}
+a.difference(b)
+
+# 6.21.4 - Diferença simétrica - É os elementos que não são comuns aos dois, ou seja  é tudo menos a intersecção.
+a = {1, 2, 3, 6}
+b = {2, 4, 5, 6}
+print(a ^ b) # {1, 3, 4, 5}
+a.symmetric_difference(b)
+
+# 6.21.5 - Outras operações.
+# Como saber se um conjunto contém outro?
+a = {x for x in range(0, 10, 2)}
+print(a) # {0, 2, 4, 6, 8}
+b = {2, 4}
+
+# Podemos verificar se um conjunto contém o outro usando o maior (>):
+print(a > b) # True - Todos os elementos de "b" estão em "a".
+print(b > a) # False - Nem todo elemento de "a" pertence a "b"
+print(a > a) # False - Todos os elementos de "a" estão em "a". Porém os dois conjuntos são iguais.
+
+# Podemos verificar se conjuntos possuem os mesmos elementos utilizando ==
+print(a == a) # True
+print(b == {2, 4}) # True
+print(a != a) # False
+
+# Testando se um conjunto é vazio.
+if {}:
+    print("Não vazio!") 
+else:
+    print("Vazio!")
+print(bool({})) # False 
+# Bool é uma função que converte qualquer coisa em verdadeiro ou falso., ex: bool(algo) retorna True se tiver conteúdo ou False se tiver vazio ou 0.
+print(len({})) # 0
+
+# Exemplos de usos de conjuntos:
+e = [1, 2, 3, 4]
+f = [3, 4, 5, 6]
+
+# Juntando as duas listas, sem repetir os elmentos e sem garantia de ordem:
+print(set(e) | set(f)) # {1, 2, 3, 4, 5, 6}
+
+# Elementos da lista "e" que não estão em "f":
+print(set(e) - set(f)) # {1, 2}
+
+# Elementos que estão apenas em "e" ou "f" (tudo menos a intersecção):
+print(set(e) ^ set(f)) # {1, 2, 5, 6}
+
+# Elementos que estão tanto em "e" tant em "f" (intersecção):
+print(set(e) & set(f)) # {3, 4}
+
+# Exercício 6.21 - Escreva um programa que compare duas listas. Utilizando operações com conjuntos, imprima:
+# os valores comuns às duas listas:
+# os valores que só existem na primeira:
+# os valores que existem apenas na segunda:
+# uma lista com os elementos não repetidos das duas listas:
+# a primeira lista sem os elementos repetidos na segunda:
+
+a = [1, 2, 3, 4, 5]
+b = [3, 4, 6]
+print(set(a) & set(b))
+print(set(a) - set(b))
+print(set(b) - set(a))
+print(set(a) ^ set(b))
+print(set(a) - set(b))
+
+# Exercício 6.22 - Escreva um programa que compare duas listas. Considere a primeira lista como a versão inicial e a segunda como a
+# versão após alterações. Utilizando operações com conjuntos, seu programa deverá imprimir a lista de modificações
+# entre essas duas versões, listando:
+# os elementos que não mudaram:
+# os novos elementos:
+# os elementos que foram removidos:
+
+a = [5, 6 ,7, 8, 9, 10]
+b = [5, 6, 9, 10, 11]
+print("Lista de modificações:")
+print(f"os elementos que não mudaram: {set(a) & set(b)}")
+print(f"Os novos elementos: {set(b) - set(a)}")
+print(f"Os elementos que foram removidos: {set(a) - set(b)}")
