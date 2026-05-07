@@ -1,0 +1,90 @@
+# Exercício 1: Controlador de Estoque de Prateleira
+# Contexto: Imagine um repositor de supermercado que recebe uma lista de comandos para organizar uma prateleira.
+# F significa "Lote de Frutas" (adiciona 3 itens de uma vez).
+# V significa "Venda" (remove o primeiro item da prateleira).
+# O usuário pode digitar vários comandos juntos (ex: FFV).
+# Enunciado: Escreva um programa que controle uma lista chamada prateleira.
+# O programa deve ler uma string de operações. Se a operação for "F",
+#  um loop interno deve adicionar 3 novos itens (representados por números sequenciais) à lista. 
+# Se for "V", deve remover o primeiro item.
+
+L1 = []
+contador_frutas_estocadas = 0
+contador_frutas_vendidas = 0
+rodando = True 
+while rodando:
+    print(f"Itens na prateleira: {L1}")
+    operação = input("Lista do supermercado (F, V ou S para parar de dar ordens)\nPode ser em formato de string (ex: FFVS):  ")
+    lista = list(operação)
+    i = 0
+    while i < len(lista):
+        item = lista[i]
+        if item == "F":
+            x = 0
+            while x < 3:
+                L1.append(contador_frutas_estocadas)
+                contador_frutas_estocadas += 1
+                x += 1
+                print("1 frutas foi adicionada")
+        elif item == "V":
+            if len(lista) > 0:
+                  vendido = L1.pop(0)
+                  print(f"1 item foi removido.")
+                  contador_frutas_vendidas += 1
+            else:
+                print("Não há mais produtos em estoque para serem removidos.")
+                rondando = False
+                break
+        elif item == "S":
+            print("Lista concluída, o funcionário pode começar\na trabalhar agora!")
+            rodando = False
+            break
+        i += 1
+print(f"No total foram estocadas {contador_frutas_estocadas} frutas\ne {contador_frutas_vendidas} vendidas")
+
+
+# Exercício 2: O Verificador de Prioridade
+# Contexto: Em um sistema de processos, alguns pedidos são urgentes.
+# P significa pedido normal (vai para o fim da lista).
+# U significa "Urgência Total" (limpa todos os pedidos da lista de uma vez).
+# Enunciado: Crie um programa que leia uma string de comandos.
+# O comando "P" adiciona um número à lista.
+# O comando "U" deve disparar um loop interno que remove os itens da lista um por um,
+#  imprimindo "Limpando processo X", até que a lista fique vazia.
+
+
+contador_pedidos_normais = 0
+contado_pedidos_urgentes = 0
+L1 = []
+rodando = True
+while rodando:
+    operação = input("Comandos (P, U ou S para sair)\nPode ser em formato de string (ex: PPUS): ")
+    lista = list(operação)
+    i = 0 
+    while i < len(lista):
+        item = lista[i]
+        if item == "P":
+            print("Pedido normal adicionado.")
+            L1.append(1)
+            contador_pedidos_normais += 1
+        elif item == "U":
+            while len(L1) > 0:
+                x = len(L1)
+                removido = L1.pop(x - 1)
+                print(f"Item {x} removido...")
+            print("Pedido urgente adicionado!!!")
+            L1.append(1)
+            contado_pedidos_urgentes += 1
+        elif item == "S":
+            print("Lista de comandos finalizada.")
+            rodando = False
+            break
+        i += 1
+          
+
+          
+            
+            
+
+
+
