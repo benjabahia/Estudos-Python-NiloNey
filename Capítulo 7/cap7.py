@@ -410,4 +410,233 @@ s = "...///Olá///..."
 print(s.lstrip(".")) # "//Olá///..."
 print(s.strip("/")) # "...///Olá///..." FICA IGUAL, pq o strip só remove caracteres da ponta e esses "/" não estão na ponta.
 
-# 7.8 - VAlidação por tipo de conteúdo.
+# 7.8 - Validação por tipo de conteúdo.
+# O método isalnum retorna True se só tiver letras e números como caracteres.
+# CAso possua espaços, vírugulas, caracteres especiais ela retorna False.
+
+# E o método isalpha retorna True apenas se todos os caracteres forem letras, nem núemros ela ceita.
+
+s = "125"
+p = "hello world"
+k = "banana"
+
+print(s.isalnum()) # True
+print(p.isalnum()) # False
+print(k.isalnum()) # True
+
+print(s.isalpha()) # False
+print(p.isalpha()) # False
+print(k.isalpha()) # True
+
+# Método isdigit() verifica se todos os caracteres da string são DÍGITOS, ou seja números puros de 0 a 9.
+s = "123"
+print(s.isdigit()) # True
+
+s = "-123"
+print(s.isdigit()) # False, por causa do sinal "-" que não é um número puro de 0 a 9.
+
+s = "123 456"
+print(s.isdigit()) # FAlse, por causa do espaço " ".
+
+# Método isnumeric() verifica se todos os caracteres possuem VALOR NUMÉRICO, aceita símbolos numéricos especiais também.
+s = "Ⅳ" # NÃO é a letra i e a letra v, são CARACTERES UNICODES ESPECIAIS
+print(s.isnumeric()) # True
+print(s.isdigit()) # False
+
+s = "⅓" # NÃO é o número 1 a barra e o número 3 e sim um CARACTER UNCICODE ESPECÍFICO
+print(s.isnumeric()) # True
+print(s.isdigit()) # False
+
+# Também podemos verificar se todos os caracteres de um string são letras maiúsculas ou minúsculas usando
+# isupper() e islower()
+
+s = "ABC"
+p = "abc"
+e = "aBc"
+
+print(s.isupper()) # True
+print(s.islower()) # False
+print(p.isupper()) # False
+print(e.isupper()) # False
+print(e.islower()) # False
+
+# Também tem comom verificar se a string contém apenas caracteres em branco, como espaços, marcas de tabulação (TAB), 
+# quebras de linha (LF) ou retorno de carro (CR).
+
+# Método isspace():
+print("\t\n\r      ".isspace()) # True
+print("\tAlô".isspace()) # False
+
+# Método isprintable()
+# Verifica se todos os caracteres dessa string podem ser impressos/mostrados normalmente?
+
+print("\n\t".isprintable()) # False, pois \n e \t não são caracteres visíveis.
+print("\nAlô".isprintable()) # False
+print("Alô Mundo".isprintable()) # True, " " é sim considerável visível.
+
+# 7.10 - Jogo da Forca.
+
+palavra = input("Digite a palavra secreta:").lower().strip()
+for x in range(100):
+    print()
+digitadas = []
+acertos = []
+erros = 0
+while True:
+    senha = ""
+    for letra in palavra:
+        senha += letra if letra in acertos else "."
+    print(senha)
+    if senha == palavra:
+        print("Você acertou!")
+        break
+    tentativa = input("\nDigite uma letra:").lower().strip()
+    if tentativa in digitadas:
+        print("Você já tentou esta letra!")
+        continue
+    else:
+        digitadas += tentativa
+        if tentativa in palavra:
+            acertos += tentativa
+        else:
+            erros += 1
+            print("Você errou!")
+    print("X==:==\nX  :  ")
+    print("X  O  " if erros >= 1 else "X")
+    linha2 = ""
+    if erros == 2:
+        linha2 = "  |  "
+    elif erros == 3:
+        linha2 = " \|  "
+    elif erros >= 4:
+        linha2 = " \|/ "
+    print(f"X{linha2}")
+    linha3 = ""
+    if erros == 5:
+        linha3 += " /   "
+    elif erros >= 6:
+        linha3 += " / \ "
+    print(f"X{linha3}")
+    print("X\n===========")
+    if erros == 6:
+        print("Enforcado!")
+        break
+    
+# Exerccício 7.9: Modifique o o jogo da forca (Programa 7.2) de forma a escrever a palavra secreta caso o jogador perca.
+
+palavra = input("Digite a palavra secreta:").lower().strip()
+for x in range(100):
+    print()
+digitadas = []
+acertos = []
+erros = 0
+while True:
+    senha = ""
+    for letra in palavra:
+        senha += letra if letra in acertos else "."
+    print(senha)
+    if senha == palavra:
+        print("Você acertou!")
+        break
+    tentativa = input("\nDigite uma letra:").lower().strip()
+    if tentativa in digitadas:
+        print("Você já tentou esta letra!")
+        continue
+    else:
+        digitadas += tentativa
+        if tentativa in palavra:
+            acertos += tentativa
+        else:
+            erros += 1
+            print("Você errou!")
+    print("X==:==\nX  :  ")
+    print("X  O  " if erros >= 1 else "X")
+    linha2 = ""
+    if erros == 2:
+        linha2 = "  |  "
+    elif erros == 3:
+        linha2 = " \|  "
+    elif erros >= 4:
+        linha2 = " \|/ "
+    print(f"X{linha2}")
+    linha3 = ""
+    if erros == 5:
+        linha3 += " /   "
+    elif erros >= 6:
+        linha3 += " / \ "
+    print(f"X{linha3}")
+    print("X\n===========")
+    if erros == 6:
+        print("Enforcado!")
+        print(f"A palavra secreta era: {palavra}")
+        break
+    
+# EXercício 7.10: Modifique o Programa 7.2 de forma a utilizar uma lista de palavras.
+# No início, pergunte um número e calcule o índice da palavra a utilizar
+# pela fórmula: índice = (número * 776) % len(lista_de_palavras)
+
+palavras = ["casa", "bola", "mangueira", "uva", "quiabo", 
+            "computador", "cobra", "lentilha", "arroz"]
+
+índice = int(input("Digite um número: "))
+palavra = palavras[(índice  * 776) % len(palavras)]
+
+for x in range(100):
+    print()
+digitadas = []
+acertos = []
+erros = 0
+while True:
+    senha = ""
+    for letra in palavra:
+        senha += letra if letra in acertos else "."
+    print(senha)
+    if senha == palavra:
+        print("Você acertou!")
+        break
+    tentativa = input("\nDigite uma letra:").lower().strip()
+    if tentativa in digitadas:
+        print("Você já tentou esta letra!")
+        continue
+    else:
+        digitadas += tentativa
+        if tentativa in palavra:
+            acertos += tentativa
+        else:
+            erros += 1
+            print("Você errou!")
+    print("X==:==\nX  :  ")
+    print("X  O  " if erros >= 1 else "X")
+    linha2 = ""
+    if erros == 2:
+        linha2 = "  |  "
+    elif erros == 3:
+        linha2 = " \|  "
+    elif erros >= 4:
+        linha2 = " \|/ "
+    print(f"X{linha2}")
+    linha3 = ""
+    if erros == 5:
+        linha3 += " /   "
+    elif erros >= 6:
+        linha3 += " / \ "
+    print(f"X{linha3}")
+    print("X\n===========")
+    if erros == 6:
+        print("Enforcado!")
+        print(f"A palavra secreta era: {palavra}")
+        break
+    
+# Exercício 7.11: Modifique o Programa 7.2 para utilizar listas de strings para desenhar o boneco da forca.
+# Você pode utilizar uma lista para cada linha e organizá-las em uma lista de listas.
+# Em vez de controlar quando imprimir cada parte, desenhe nessas listas, substituindo o elemento a desenhar.
+
+# Exemplo:
+# >>> linha = list("X------")
+# >>> linha
+# ['X', '-', '-', '-', '-', '-', '-']
+# >>> linha[6] = "|"
+# >>> linha
+# ['X', '-', '-', '-', '-', '-', '|']
+# >>> "".join(linha)
+# 'X-----|'
